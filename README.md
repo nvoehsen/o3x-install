@@ -110,24 +110,23 @@ There is also a property which helps some apple programs with ZFS, I set it to "
 Spotlight works since O3X 1.3.1. I needed to do some administration tasks to get it to run properly:
 
 * Stop Spotlight:
-
-
+```bash
 	mdutil -i off /Volumes/tank
 	mdutil -i off /Volumes/tank/user
+```
 
 * Erase spotlight data
-
-
+```bash
 	mdutil -E /Volumes/tank
 	mdutil -E /Volumes/tank/user
 	cd /Volumes/tank && sudo rm -rf .Spotlight-V100
 	cd /Volumes/tank/user && sudo rm -rf .Spotlight-V100
-
+```
 
 * Restart Spotlight
-
-
+```bash
 	mdutil -i on /Volumes/tank/user
+```
 
 ### Time Machine
 
@@ -152,36 +151,38 @@ I compared three devices w.r.t disk performance:
 
 File system performance was measured using [bonnie++](http://www.coker.com.au/bonnie++/). Get it installed and start a test with
 
-
+```bash
 	brew install bonnie++
 	/usr/local/sbin/bonnie++ -s 999 -b -m <testname> -d <directory>
-
+```
 
 The results are as follows:
 
-SSD drive:
-<iframe
-     src="bonssd.html"
-     width="90%"
-     height="300"
-     name="Results SSD">
- </iframe>
+# SSD drive
 
-Single spinning disk:
-<iframe
-     src="bon1tb.html"
-     width="90%"
-     height="300"
-     name="Results single spinning disk">
- </iframe>
+<table border="3" cellpadding="2" cellspacing="1"><tr><td colspan="2" class="header"><font size=+1><b>Version 1.97</b></font></td><td colspan="6" class="header"><font size=+2><b>Sequential Output</b></font></td><td colspan="4" class="header"><font size=+2><b>Sequential Input</b></font></td><td colspan="2" rowspan="2" class="header"><font size=+2><b>Random<br>Seeks</b></font></td><td colspan="1" class="header"></td><td colspan="6" class="header"><font size=+2><b>Sequential Create</b></font></td><td colspan="6" class="header"><font size=+2><b>Random Create</b></font></td></tr>
+<tr><td></td><td>Size</td><td colspan="2">Per Char</td><td colspan="2">Block</td><td colspan="2">Rewrite</td><td colspan="2">Per Char</td><td colspan="2">Block</td><td>Num Files</td><td colspan="2">Create</td><td colspan="2">Read</td><td colspan="2">Delete</td><td colspan="2">Create</td><td colspan="2">Read</td><td colspan="2">Delete</td></tr><tr><td colspan="2"></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td colspan="1"></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td></tr>
+<tr><td rowspan="2" bgcolor="#FFFFFF" class="rowheader"><font size=+1>SSD</td><td class="size" bgcolor="#FFFFFF">999M</td><td>898</td><td>99</td><td>504473</td><td>33</td><td>507579</td><td>22</td><td>2123</td><td>99</td><td>+++++</td><td>+++</td><td>+++++</td><td>+++</td><td class="size" bgcolor="#FFFFFF">16</td><td>26658</td><td>91</td><td>+++++</td><td>+++</td><td>28598</td><td>84</td><td>23456</td><td>88</td><td>+++++</td><td>+++</td><td>15481</td><td>57</td></tr>
+<tr><td class="size" bgcolor="#FFFFFF" colspan="1">Latency</td><td colspan="2">10082us</td><td colspan="2">20351us</td><td colspan="2">21497us</td><td colspan="2">4014us</td><td colspan="2">7us</td><td colspan="2">1962us</td><td class="size" bgcolor="#FFFFFF" colspan="1">Latency</td><td colspan="2">1160us</td><td colspan="2">25us</td><td colspan="2">1241us</td><td colspan="2">2175us</td><td colspan="2">12us</td><td colspan="2">13363us</td></tr>
+</table>
 
- RaidZ drive:
- <iframe
-      src="bonraidz.html"
-      width="90%"
-      height="300"
-      name="Results RaidZ">
-  </iframe>
+### Single spinning disk
+
+<table border="3" cellpadding="2" cellspacing="1"><tr><td colspan="2" class="header"><font size=+1><b>Version 1.97</b></font></td><td colspan="6" class="header"><font size=+2><b>Sequential Output</b></font></td><td colspan="4" class="header"><font size=+2><b>Sequential Input</b></font></td><td colspan="2" rowspan="2" class="header"><font size=+2><b>Random<br>Seeks</b></font></td><td colspan="1" class="header"></td><td colspan="6" class="header"><font size=+2><b>Sequential Create</b></font></td><td colspan="6" class="header"><font size=+2><b>Random Create</b></font></td></tr>
+<tr><td></td><td>Size</td><td colspan="2">Per Char</td><td colspan="2">Block</td><td colspan="2">Rewrite</td><td colspan="2">Per Char</td><td colspan="2">Block</td><td>Num Files</td><td colspan="2">Create</td><td colspan="2">Read</td><td colspan="2">Delete</td><td colspan="2">Create</td><td colspan="2">Read</td><td colspan="2">Delete</td></tr><tr><td colspan="2"></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td colspan="1"></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td></tr>
+<tr><td rowspan="2" bgcolor="#FFFFFF" class="rowheader"><font size=+1>SingleDrive</td><td class="size" bgcolor="#FFFFFF">999M</td><td>889</td><td>99</td><td>140568</td><td>9</td><td>147368</td><td>6</td><td>2128</td><td>99</td><td>+++++</td><td>+++</td><td>4033</td><td>27</td><td class="size" bgcolor="#FFFFFF">16</td><td>28457</td><td>81</td><td>+++++</td><td>+++</td><td>31097</td><td>77</td><td>6508</td><td>21</td><td>+++++</td><td>+++</td><td>1766</td><td>6</td></tr>
+<tr><td class="size" bgcolor="#FFFFFF" colspan="1">Latency</td><td colspan="2">9874us</td><td colspan="2">100ms</td><td colspan="2">90811us</td><td colspan="2">4462us</td><td colspan="2">14us</td><td colspan="2">238ms</td><td class="size" bgcolor="#FFFFFF" colspan="1">Latency</td><td colspan="2">8310us</td><td colspan="2">26us</td><td colspan="2">895us</td><td colspan="2">144ms</td><td colspan="2">11us</td><td colspan="2">191ms</td></tr>
+</table>
+
+
+### RaidZ drive
+
+<table border="3" cellpadding="2" cellspacing="1"><tr><td colspan="2" class="header"><font size=+1><b>Version 1.97</b></font></td><td colspan="6" class="header"><font size=+2><b>Sequential Output</b></font></td><td colspan="4" class="header"><font size=+2><b>Sequential Input</b></font></td><td colspan="2" rowspan="2" class="header"><font size=+2><b>Random<br>Seeks</b></font></td><td colspan="1" class="header"></td><td colspan="6" class="header"><font size=+2><b>Sequential Create</b></font></td><td colspan="6" class="header"><font size=+2><b>Random Create</b></font></td></tr>
+<tr><td></td><td>Size</td><td colspan="2">Per Char</td><td colspan="2">Block</td><td colspan="2">Rewrite</td><td colspan="2">Per Char</td><td colspan="2">Block</td><td>Num Files</td><td colspan="2">Create</td><td colspan="2">Read</td><td colspan="2">Delete</td><td colspan="2">Create</td><td colspan="2">Read</td><td colspan="2">Delete</td></tr><tr><td colspan="2"></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>K/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td colspan="1"></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td><td class="ksec"><font size=-2>/sec</font></td><td class="ksec"><font size=-2>% CPU</font></td></tr>
+<tr><td rowspan="2" bgcolor="#FFFFFF" class="rowheader"><font size=+1>raidz</td><td class="size" bgcolor="#FFFFFF">999M</td><td>150</td><td>99</td><td>277823</td><td>38</td><td>380660</td><td>50</td><td>421</td><td>99</td><td>+++++</td><td>+++</td><td>1431</td><td>12</td><td class="size" bgcolor="#FFFFFF">16</td><td>91</td><td>5</td><td>+++++</td><td>+++</td><td>92</td><td>1</td><td>87</td><td>4</td><td>+++++</td><td>+++</td><td>91</td><td>1</td></tr>
+<tr><td class="size" bgcolor="#FFFFFF" colspan="1">Latency</td><td colspan="2">55520us</td><td colspan="2">3179us</td><td colspan="2">2616us</td><td colspan="2">19770us</td><td colspan="2">90us</td><td colspan="2">324ms</td><td class="size" bgcolor="#FFFFFF" colspan="1">Latency</td><td colspan="2">251ms</td><td colspan="2">58us</td><td colspan="2">281ms</td><td colspan="2">448ms</td><td colspan="2">15us</td><td colspan="2">298ms</td></tr>
+</table>
+
 
 The bandwidth numbers are along the expected results with the RaidZ yielding about twice the throughput of a single disk. The mass file creation/deletion tests did take absurdly long with RaidZ, I suspect that something about the "-b" flag (issues fsync after each write operation) in bonnie++ doesn't play well with the ZFS implementation. Since I don't regularly create thousands of files per second I don't really care.
 
